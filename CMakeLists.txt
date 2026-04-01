@@ -16,7 +16,22 @@ else()
 endif()
 
 # Main executable
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME}
+    main.cpp
+    Vehicle.cpp
+    Car.cpp
+    Motorcycle.cpp
+    ElectricFeature.cpp
+    LuxuryFeature.cpp
+    LuxuryElectricCar.cpp
+    Person.cpp
+    Customer.cpp
+    Employee.cpp
+    Reservation.cpp
+    VehicleException.cpp
+    RentalSystem.cpp
+    Menu.cpp
+)
 
 if(GITHUB_ACTIONS)
     message("NOTE: GITHUB_ACTIONS defined")
@@ -49,10 +64,8 @@ elseif(APPLE)
     target_link_options(${PROJECT_NAME} PRIVATE "$<${debug_mode}:-fsanitize=address,undefined>")
 elseif(UNIX)
     if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU")
-        # We leave GCC "clean" so Valgrind can run without shadow memory conflicts
         message("GCC detected: Sanitizers disabled to allow Valgrind usage.")
     elseif("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
-        # Enable ASan for Clang 14 and all newer versions (15, 16, 17, 18, etc.)
         if("${CMAKE_CXX_COMPILER_VERSION}" VERSION_GREATER_EQUAL "14.0")
             target_compile_options(${PROJECT_NAME} PRIVATE "$<${debug_mode}:-fsanitize=address,undefined>")
             target_link_options(${PROJECT_NAME} PRIVATE "$<${debug_mode}:-fsanitize=address,undefined>")
